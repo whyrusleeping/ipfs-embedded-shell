@@ -16,7 +16,7 @@ type Interface interface {
 	Cat(path string) (io.ReadCloser, error)
 
 	// AddDir(dir string) (string, error)
-	// Get(hash string, outdir string) error
+	Get(hash string, outdir string) error
 
 	// List(path string) ([]*LsLink, error)
 	//FileList(path string) (*UnixLsObject, error)
