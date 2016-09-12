@@ -16,16 +16,16 @@ func (s *Shell) NewObject(template string) (string, error) {
 	case "":
 		break
 	case "unixfs-dir":
-		node.Data = ft.FolderPBData()
+		node.SetData(ft.FolderPBData())
 	default:
 		return "", fmt.Errorf("unknown template %s", template)
 	}
-	k, err := s.node.DAG.Add(node)
+	c, err := s.node.DAG.Add(node)
 	if err != nil {
 		return "", err
 	}
 
-	return k.B58String(), nil
+	return c.String(), nil
 }
 
 // TODO: extract all this logic from the core/commands/object.go to avoid dupe code
@@ -67,12 +67,7 @@ func (s *Shell) Patch(root, action string, args ...string) (string, error) {
 			return "", err
 		}
 
-		final, err := e.GetNode().Key()
-		if err != nil {
-			return "", err
-		}
-
-		return final.B58String(), nil
+		return e.GetNode().Key().B58String(), nil
 	default:
 		return "", fmt.Errorf("unsupported action (impl not complete)")
 	}
@@ -102,7 +97,7 @@ func (s *Shell) PatchLink(root, npath, childhash string, create bool) (string, e
 
 	e := dagutils.NewDagEditor(rootnd, s.node.DAG)
 	err = e.InsertNodeAtPath(s.ctx, npath, nnode, func() *dag.Node {
-		return &dag.Node{Data: ft.FolderPBData()}
+		return dag.NodeWithData(ft.FolderPBData())
 	})
 	if err != nil {
 		return "", err
@@ -113,10 +108,5 @@ func (s *Shell) PatchLink(root, npath, childhash string, create bool) (string, e
 		return "", err
 	}
 
-	final, err := e.GetNode().Key()
-	if err != nil {
-		return "", err
-	}
-
-	return final.B58String(), nil
+	return e.GetNode().Key().B58String(), nil
 }

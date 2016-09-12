@@ -42,10 +42,5 @@ func (s *Shell) ResolvePath(ipath string) (string, error) {
 		return "", err
 	}
 
-	k, err := nd.Key()
-	if err != nil {
-		return "", err
-	}
-
-	return k.B58String(), nil
+	return nd.Key().B58String(), nil
 }
