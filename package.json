@@ -27,6 +27,6 @@
   "language": "go",
   "license": "MIT",
   "name": "ipfs-embedded-shell",
-  "version": "0.0.1"
+  "version": "0.0.2"
 }
 
