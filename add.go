@@ -19,7 +19,7 @@ func (s *Shell) Add(r io.Reader) (string, error) {
 	if err != nil {
 		return "", errgo.Notef(err, "add: importing DAG failed.")
 	}
-	return dag.Key().B58String(), nil
+	return dag.Cid().String(), nil
 }
 
 // AddLink creates a unixfs symlink and returns its hash

@@ -16,7 +16,7 @@ func (s *Shell) Cat(p string) (io.ReadCloser, error) {
 	if err != nil {
 		return nil, errgo.Notef(err, "cat: could not parse %q", p)
 	}
-	nd, err := core.Resolve(s.ctx, s.node, ipfsPath)
+	nd, err := core.Resolve(s.ctx, s.node.Namesys, s.node.Resolver, ipfsPath)
 	if err != nil {
 		return nil, errgo.Notef(err, "cat: could not resolve %s", ipfsPath)
 	}

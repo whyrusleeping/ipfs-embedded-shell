@@ -1,6 +1,7 @@
 package embeddedShell
 
 import (
+	"errors"
 	"fmt"
 
 	core "github.com/ipfs/go-ipfs/core"
@@ -11,7 +12,7 @@ import (
 )
 
 func (s *Shell) NewObject(template string) (string, error) {
-	node := new(dag.Node)
+	node := new(dag.ProtoNode)
 	switch template {
 	case "":
 		break
@@ -35,9 +36,14 @@ func (s *Shell) Patch(root, action string, args ...string) (string, error) {
 		return "", err
 	}
 
-	rootnd, err := core.Resolve(s.ctx, s.node, p)
+	nd, err := core.Resolve(s.ctx, s.node.Namesys, s.node.Resolver, p)
 	if err != nil {
 		return "", err
+	}
+
+	rootnd, ok := nd.(*dag.ProtoNode)
+	if !ok {
+		return "", errors.New("could not cast Node to ProtoNode")
 	}
 
 	insertpath := args[0]
@@ -48,7 +54,7 @@ func (s *Shell) Patch(root, action string, args ...string) (string, error) {
 		return "", err
 	}
 
-	nnode, err := core.Resolve(s.ctx, s.node, childpath)
+	nnode, err := core.Resolve(s.ctx, s.node.Namesys, s.node.Resolver, childpath)
 	if err != nil {
 		return "", err
 	}
@@ -67,7 +73,7 @@ func (s *Shell) Patch(root, action string, args ...string) (string, error) {
 			return "", err
 		}
 
-		return e.GetNode().Key().B58String(), nil
+		return e.GetNode().Cid().String(), nil
 	default:
 		return "", fmt.Errorf("unsupported action (impl not complete)")
 	}
@@ -80,9 +86,14 @@ func (s *Shell) PatchLink(root, npath, childhash string, create bool) (string, e
 		return "", err
 	}
 
-	rootnd, err := core.Resolve(s.ctx, s.node, p)
+	nd, err := core.Resolve(s.ctx, s.node.Namesys, s.node.Resolver, p)
 	if err != nil {
 		return "", err
+	}
+
+	rootnd, ok := nd.(*dag.ProtoNode)
+	if !ok {
+		return "", errors.New("could not cast Node to ProtoNode")
 	}
 
 	childpath, err := path.ParsePath(childhash)
@@ -90,13 +101,13 @@ func (s *Shell) PatchLink(root, npath, childhash string, create bool) (string, e
 		return "", err
 	}
 
-	nnode, err := core.Resolve(s.ctx, s.node, childpath)
+	nnode, err := core.Resolve(s.ctx, s.node.Namesys, s.node.Resolver, childpath)
 	if err != nil {
 		return "", err
 	}
 
 	e := dagutils.NewDagEditor(rootnd, s.node.DAG)
-	err = e.InsertNodeAtPath(s.ctx, npath, nnode, func() *dag.Node {
+	err = e.InsertNodeAtPath(s.ctx, npath, nnode, func() *dag.ProtoNode {
 		return dag.NodeWithData(ft.FolderPBData())
 	})
 	if err != nil {
@@ -108,5 +119,5 @@ func (s *Shell) PatchLink(root, npath, childhash string, create bool) (string, e
 		return "", err
 	}
 
-	return e.GetNode().Key().B58String(), nil
+	return e.GetNode().Cid().String(), nil
 }
