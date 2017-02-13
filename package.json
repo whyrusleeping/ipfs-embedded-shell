@@ -1,8 +1,8 @@
 {
-  "author": "noffle",
+  "author": "whyrusleeping",
   "bugs": {},
   "gx": {
-    "dvcsimport": "github.com/noffle/ipfs-embedded-shell"
+    "dvcsimport": "github.com/whyrusleeping/ipfs-embedded-shell"
   },
   "gxDependencies": [
     {
