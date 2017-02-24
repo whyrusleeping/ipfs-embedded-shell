@@ -9,14 +9,14 @@ import (
 	"strings"
 	"testing"
 
+	cid "github.com/ipfs/go-cid"
 	"github.com/ipfs/go-ipfs/assets"
-	"github.com/ipfs/go-ipfs/blocks/key"
 	"github.com/ipfs/go-ipfs/core"
 	"github.com/ipfs/go-ipfs/core/mock"
 )
 
 type testShell struct {
-	key *key.Key
+	cid *cid.Cid
 	mn  *core.IpfsNode
 	s   *Shell
 }
@@ -31,7 +31,7 @@ func newTestShell(t *testing.T) *testShell {
 		t.Fatalf("assets.SeedInitDocs() failed: %s", err)
 	}
 	return &testShell{
-		key: tk,
+		cid: tk,
 		mn:  mn,
 		s:   NewShell(mn),
 	}
@@ -39,7 +39,7 @@ func newTestShell(t *testing.T) *testShell {
 
 func TestCat(t *testing.T) {
 	ts := newTestShell(t)
-	rc, err := ts.s.Cat(path.Join("/ipfs/", ts.key.String(), "about"))
+	rc, err := ts.s.Cat(path.Join("/ipfs/", ts.cid.String(), "about"))
 	if err != nil {
 		t.Fatal(err)
 	}

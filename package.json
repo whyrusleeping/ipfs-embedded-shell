@@ -1,0 +1,32 @@
+{
+  "author": "whyrusleeping",
+  "bugs": {},
+  "gx": {
+    "dvcsimport": "github.com/whyrusleeping/ipfs-embedded-shell"
+  },
+  "gxDependencies": [
+    {
+      "author": "whyrusleeping",
+      "hash": "QmfSc2xehWmWLnwwYR91Y8QF4xdASypTFVknutoKQS3GHp",
+      "name": "go-cid",
+      "version": "0.1.0"
+    },
+    {
+      "author": "ipfs",
+      "hash": "QmeUNjuZg7vSBPYHSF5VdSe9t3Y18g57ot2n6Wi3sJhtgN",
+      "name": "go-ipfs-api",
+      "version": "1.0.0"
+    },
+    {
+      "hash": "QmXEaqe2JNoSRHrHiBGJoaCG9Zn8WVzNdANzUNhruSBa86",
+      "name": "go-ipfs",
+      "version": "0.4.5-rc2"
+    }
+  ],
+  "gxVersion": "0.9.0",
+  "language": "go",
+  "license": "MIT",
+  "name": "ipfs-embedded-shell",
+  "version": "0.0.2"
+}
+

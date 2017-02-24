@@ -14,15 +14,15 @@ func (s *Shell) List(ipath string) ([]*sh.LsLink, error) {
 		return nil, err
 	}
 
-	nd, err := core.Resolve(s.ctx, s.node, p)
+	nd, err := core.Resolve(s.ctx, s.node.Namesys, s.node.Resolver, p)
 	if err != nil {
 		return nil, err
 	}
 
 	var out []*sh.LsLink
-	for _, l := range nd.Links {
+	for _, l := range nd.Links() {
 		out = append(out, &sh.LsLink{
-			Hash: l.Hash.B58String(),
+			Hash: l.Cid.String(),
 			Name: l.Name,
 			Size: l.Size,
 		})
@@ -37,15 +37,10 @@ func (s *Shell) ResolvePath(ipath string) (string, error) {
 		return "", err
 	}
 
-	nd, err := core.Resolve(s.ctx, s.node, p)
+	nd, err := core.Resolve(s.ctx, s.node.Namesys, s.node.Resolver, p)
 	if err != nil {
 		return "", err
 	}
 
-	k, err := nd.Key()
-	if err != nil {
-		return "", err
-	}
-
-	return k.B58String(), nil
+	return nd.Cid().String(), nil
 }
