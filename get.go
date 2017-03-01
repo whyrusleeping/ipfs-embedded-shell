@@ -2,7 +2,7 @@ package embeddedShell
 
 import (
 	"errors"
-	"gopkg.in/errgo.v1"
+	"fmt"
 
 	"github.com/ipfs/go-ipfs/core"
 	dag "github.com/ipfs/go-ipfs/merkledag"
@@ -15,12 +15,12 @@ import (
 func (s *Shell) Get(ref, outdir string) error {
 	ipfsPath, err := path.ParsePath(ref)
 	if err != nil {
-		return errgo.Notef(err, "get: could not parse %q", ref)
+		return fmt.Errorf("get: could not parse %q: %s", ref, err)
 	}
 
 	nd, err := core.Resolve(s.ctx, s.node.Namesys, s.node.Resolver, ipfsPath)
 	if err != nil {
-		return errgo.Notef(err, "get: could not resolve %s", ipfsPath)
+		return fmt.Errorf("get: could not resolve %s: %s", ipfsPath, err)
 	}
 
 	pbnd, ok := nd.(*dag.ProtoNode)

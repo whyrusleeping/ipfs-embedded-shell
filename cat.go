@@ -1,9 +1,8 @@
 package embeddedShell
 
 import (
+	"fmt"
 	"io"
-
-	"gopkg.in/errgo.v1"
 
 	"github.com/ipfs/go-ipfs/core"
 	"github.com/ipfs/go-ipfs/path"
@@ -14,15 +13,15 @@ import (
 func (s *Shell) Cat(p string) (io.ReadCloser, error) {
 	ipfsPath, err := path.ParsePath(p)
 	if err != nil {
-		return nil, errgo.Notef(err, "cat: could not parse %q", p)
+		return nil, fmt.Errorf("cat: could not parse %q: %s", p, err)
 	}
 	nd, err := core.Resolve(s.ctx, s.node.Namesys, s.node.Resolver, ipfsPath)
 	if err != nil {
-		return nil, errgo.Notef(err, "cat: could not resolve %s", ipfsPath)
+		return nil, fmt.Errorf("cat: could not resolve %s: %s", ipfsPath, err)
 	}
 	dr, err := unixfsio.NewDagReader(s.ctx, nd, s.node.DAG)
 	if err != nil {
-		return nil, errgo.Notef(err, "cat: failed to construct DAG reader")
+		return nil, fmt.Errorf("cat: failed to construct DAG reader: %s", err)
 	}
 	return dr, nil
 }

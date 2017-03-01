@@ -1,9 +1,8 @@
 package embeddedShell
 
 import (
+	"fmt"
 	"io"
-
-	"gopkg.in/errgo.v1"
 
 	"github.com/ipfs/go-ipfs/importer"
 	"github.com/ipfs/go-ipfs/importer/chunk"
@@ -17,7 +16,7 @@ func (s *Shell) Add(r io.Reader) (string, error) {
 		chunk.DefaultSplitter(r),
 	)
 	if err != nil {
-		return "", errgo.Notef(err, "add: importing DAG failed.")
+		return "", fmt.Errorf("add: importing DAG failed: %s", err)
 	}
 	return dag.Cid().String(), nil
 }
