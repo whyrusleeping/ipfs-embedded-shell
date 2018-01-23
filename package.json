@@ -28,6 +28,6 @@
   "license": "MIT",
   "name": "ipfs-embedded-shell",
   "releaseCmd": "git commit -a -m \"gx release $VERSION\"",
-  "version": "0.1.0"
+  "version": "0.1.1"
 }
 
