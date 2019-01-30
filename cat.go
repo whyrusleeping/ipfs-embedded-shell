@@ -5,8 +5,8 @@ import (
 	"io"
 
 	"github.com/ipfs/go-ipfs/core"
-	"github.com/ipfs/go-ipfs/path"
-	unixfsio "github.com/ipfs/go-ipfs/unixfs/io"
+	"github.com/ipfs/go-path"
+	unixfsio "github.com/ipfs/go-unixfs/io"
 )
 
 // Cat resolves the ipfs path p and returns a reader for that data, if it exists and is availalbe

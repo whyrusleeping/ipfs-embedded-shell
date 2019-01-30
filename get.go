@@ -5,10 +5,10 @@ import (
 	"fmt"
 
 	"github.com/ipfs/go-ipfs/core"
-	dag "github.com/ipfs/go-ipfs/merkledag"
-	"github.com/ipfs/go-ipfs/path"
-	tar "github.com/ipfs/go-ipfs/thirdparty/tar"
-	uarchive "github.com/ipfs/go-ipfs/unixfs/archive"
+	dag "github.com/ipfs/go-merkledag"
+	"github.com/ipfs/go-path"
+	uarchive "github.com/ipfs/go-unixfs/archive"
+	tar "github.com/whyrusleeping/tar-utils"
 )
 
 // Cat resolves the ipfs path p and returns a reader for that data, if it exists and is availalbe
@@ -33,7 +33,7 @@ func (s *Shell) Get(ref, outdir string) error {
 		return err
 	}
 
-	ext := tar.Extractor{outdir}
+	ext := tar.Extractor{Path: outdir}
 
 	return ext.Extract(r)
 }

@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"io/ioutil"
 
+	"github.com/ipfs/go-ipfs-config"
 	"github.com/ipfs/go-ipfs/core"
-	"github.com/ipfs/go-ipfs/repo/config"
 	"github.com/ipfs/go-ipfs/repo/fsrepo"
 	"golang.org/x/net/context"
 )

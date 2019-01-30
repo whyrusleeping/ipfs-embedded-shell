@@ -5,10 +5,10 @@ import (
 	"fmt"
 
 	core "github.com/ipfs/go-ipfs/core"
-	dag "github.com/ipfs/go-ipfs/merkledag"
-	dagutils "github.com/ipfs/go-ipfs/merkledag/utils"
-	path "github.com/ipfs/go-ipfs/path"
-	ft "github.com/ipfs/go-ipfs/unixfs"
+	dagutils "github.com/ipfs/go-ipfs/dagutils"
+	dag "github.com/ipfs/go-merkledag"
+	"github.com/ipfs/go-path"
+	unixfs "github.com/ipfs/go-unixfs"
 )
 
 func (s *Shell) NewObject(template string) (string, error) {
@@ -17,16 +17,16 @@ func (s *Shell) NewObject(template string) (string, error) {
 	case "":
 		break
 	case "unixfs-dir":
-		node.SetData(ft.FolderPBData())
+		node.SetData(unixfs.FolderPBData())
 	default:
 		return "", fmt.Errorf("unknown template %s", template)
 	}
-	c, err := s.node.DAG.Add(node)
+	err := s.node.DAG.Add(s.ctx, node)
 	if err != nil {
 		return "", err
 	}
 
-	return c.String(), nil
+	return node.Cid().String(), nil
 }
 
 // TODO: extract all this logic from the core/commands/object.go to avoid dupe code
@@ -68,7 +68,7 @@ func (s *Shell) Patch(root, action string, args ...string) (string, error) {
 			return "", err
 		}
 
-		_, err = e.Finalize(s.node.DAG)
+		_, err = e.Finalize(s.ctx, s.node.DAG)
 		if err != nil {
 			return "", err
 		}
@@ -108,13 +108,13 @@ func (s *Shell) PatchLink(root, npath, childhash string, create bool) (string, e
 
 	e := dagutils.NewDagEditor(rootnd, s.node.DAG)
 	err = e.InsertNodeAtPath(s.ctx, npath, nnode, func() *dag.ProtoNode {
-		return dag.NodeWithData(ft.FolderPBData())
+		return dag.NodeWithData(unixfs.FolderPBData())
 	})
 	if err != nil {
 		return "", err
 	}
 
-	_, err = e.Finalize(s.node.DAG)
+	_, err = e.Finalize(s.ctx, s.node.DAG)
 	if err != nil {
 		return "", err
 	}

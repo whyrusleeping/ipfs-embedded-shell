@@ -4,16 +4,16 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/ipfs/go-ipfs/importer"
-	"github.com/ipfs/go-ipfs/importer/chunk"
-	dag "github.com/ipfs/go-ipfs/merkledag"
-	ft "github.com/ipfs/go-ipfs/unixfs"
+	chunker "github.com/ipfs/go-ipfs-chunker"
+	dag "github.com/ipfs/go-merkledag"
+	unixfs "github.com/ipfs/go-unixfs"
+	importer "github.com/ipfs/go-unixfs/importer"
 )
 
 func (s *Shell) Add(r io.Reader) (string, error) {
 	dag, err := importer.BuildDagFromReader(
 		s.node.DAG,
-		chunk.DefaultSplitter(r),
+		chunker.DefaultSplitter(r),
 	)
 	if err != nil {
 		return "", fmt.Errorf("add: importing DAG failed: %s", err)
@@ -23,11 +23,11 @@ func (s *Shell) Add(r io.Reader) (string, error) {
 
 // AddLink creates a unixfs symlink and returns its hash
 func (s *Shell) AddLink(target string) (string, error) {
-	d, _ := ft.SymlinkData(target)
+	d, _ := unixfs.SymlinkData(target)
 	nd := dag.NodeWithData(d)
-	c, err := s.node.DAG.Add(nd)
+	err := s.node.DAG.Add(s.ctx, nd)
 	if err != nil {
 		return "", err
 	}
-	return c.String(), nil
+	return nd.Cid().String(), nil
 }
