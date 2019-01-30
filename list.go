@@ -2,7 +2,7 @@ package embeddedShell
 
 import (
 	core "github.com/ipfs/go-ipfs/core"
-	path "github.com/ipfs/go-ipfs/path"
+	"github.com/ipfs/go-path"
 
 	// for types
 	sh "github.com/ipfs/go-ipfs-api"

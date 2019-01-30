@@ -7,20 +7,62 @@
   "gxDependencies": [
     {
       "author": "whyrusleeping",
-      "hash": "QmV5gPoRsjN1Gid3LMdNZTyfCtP2DsvqEbMAmz82RmmiGk",
+      "hash": "QmPSQnBKM9g7BaUcZCvswUJVscQ1ipjmwxN5PXCjkp9EQ7",
       "name": "go-cid",
-      "version": "0.7.11"
+      "version": "0.9.0"
     },
     {
       "author": "ipfs",
-      "hash": "QmdidTt1eZtEAn1Qv1rF9kHPusm57RkfNnsZsrQndsm8TT",
+      "hash": "QmQcy2Frmpvm5D5oiWoKXfs71eh3MXTv7LN12J39hJioBi",
       "name": "go-ipfs-api",
-      "version": "1.1.0"
+      "version": "1.4.2"
     },
     {
-      "hash": "QmQa2wf1sLFKkjHCVEbna8y5qhdMjL8vtTJSAc48vZGTer",
+      "hash": "QmUJYo4etAQqFfSS2rarFAE97eNGB8ej64YkRT2SmsYD4r",
       "name": "go-ipfs",
-      "version": "0.4.6-rc1"
+      "version": "0.4.18"
+    },
+    {
+      "author": "why",
+      "hash": "QmfB3oNXGGq9S4B2a9YeCajoATms3Zw2VvDm8fK7VeLSV8",
+      "name": "go-unixfs",
+      "version": "1.1.16"
+    },
+    {
+      "author": "hsanjuan",
+      "hash": "QmTUTG9Jg9ZRA1EzTPGTDvnwfcfKhDMnqANnP9fe4rSjMR",
+      "name": "go-ipfs-chunker",
+      "version": "0.1.3"
+    },
+    {
+      "author": "why",
+      "hash": "QmSei8kFMfqdJq7Q68d2LMnHbTWKKg2daA29ezUYFAUNgc",
+      "name": "go-merkledag",
+      "version": "1.1.15"
+    },
+    {
+      "author": "magik6k",
+      "hash": "QmPEpj17FDRpc7K1aArKZp3RsHtzRMKykeK9GVgn4WQGPR",
+      "name": "go-ipfs-config",
+      "version": "0.2.16"
+    },
+    {
+      "author": "whyrusleeping",
+      "hash": "QmQine7gvHncNevKtG9QXxf3nXcwSj6aDDmMm52mHofEEp",
+      "name": "tar-utils",
+      "version": "0.0.3"
+    },
+    {
+      "author": "why",
+      "hash": "QmT3rzed1ppXefourpmoZ7tyVQfsGPQZ1pHDngLmCvXxd3",
+      "name": "go-path",
+      "version": "1.1.16"
+    },
+    {
+      "author": "whyrusleeping",
+      "hash": "QmRvYNctevGUW52urgmoFZscT6buMKqhHezLUS64WepGWn",
+      "name": "go-net",
+      "version": "0.2.0"
     }
   ],
   "gxVersion": "0.9.0",
@@ -28,6 +70,6 @@
   "license": "MIT",
   "name": "ipfs-embedded-shell",
   "releaseCmd": "git commit -a -m \"gx release $VERSION\"",
-  "version": "0.1.1"
+  "version": "0.1.2"
 }
 

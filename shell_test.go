@@ -16,7 +16,7 @@ import (
 )
 
 type testShell struct {
-	cid *cid.Cid
+	cid cid.Cid
 	mn  *core.IpfsNode
 	s   *Shell
 }
