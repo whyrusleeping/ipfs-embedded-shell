@@ -7,44 +7,44 @@
   "gxDependencies": [
     {
       "author": "whyrusleeping",
-      "hash": "QmPSQnBKM9g7BaUcZCvswUJVscQ1ipjmwxN5PXCjkp9EQ7",
+      "hash": "QmTbxNB1NwDesLmKTscr4udL2tVP7MaxvXnD1D9yX7g3PN",
       "name": "go-cid",
-      "version": "0.9.0"
+      "version": "0.9.3"
     },
     {
       "author": "ipfs",
-      "hash": "QmQcy2Frmpvm5D5oiWoKXfs71eh3MXTv7LN12J39hJioBi",
+      "hash": "QmSM3chHm3ZggBZsY2BuJbvpD9VF2mzdgR5JBQ78KnsbDw",
       "name": "go-ipfs-api",
-      "version": "1.4.2"
+      "version": "1.4.8"
     },
     {
-      "hash": "QmUJYo4etAQqFfSS2rarFAE97eNGB8ej64YkRT2SmsYD4r",
+      "hash": "QmPDEJTb3WBHmvubsLXCaqRPC8dRgvFz7A4p96dxZbJuWL",
       "name": "go-ipfs",
-      "version": "0.4.18"
+      "version": "0.4.19"
     },
     {
       "author": "why",
-      "hash": "QmfB3oNXGGq9S4B2a9YeCajoATms3Zw2VvDm8fK7VeLSV8",
+      "hash": "QmcYUTQ7tBZeH1CLsZM2S3xhMEZdvUgXvbjhpMsLDpk3oJ",
       "name": "go-unixfs",
-      "version": "1.1.16"
+      "version": "1.3.12"
     },
     {
       "author": "hsanjuan",
-      "hash": "QmTUTG9Jg9ZRA1EzTPGTDvnwfcfKhDMnqANnP9fe4rSjMR",
+      "hash": "QmYmZ81dU5nnmBFy5MmktXLZpt8QCWhRJd6M1uxVF6vke8",
       "name": "go-ipfs-chunker",
-      "version": "0.1.3"
+      "version": "0.1.6"
     },
     {
       "author": "why",
-      "hash": "QmSei8kFMfqdJq7Q68d2LMnHbTWKKg2daA29ezUYFAUNgc",
+      "hash": "QmPJNbVw8o3ohC43ppSXyNXwYKsWShG4zygnirHptfbHri",
       "name": "go-merkledag",
-      "version": "1.1.15"
+      "version": "1.1.37"
     },
     {
       "author": "magik6k",
-      "hash": "QmPEpj17FDRpc7K1aArKZp3RsHtzRMKykeK9GVgn4WQGPR",
+      "hash": "QmUAuYuiafnJRZxDDX7MuruMNsicYNuyub5vUeAcupUBNs",
       "name": "go-ipfs-config",
-      "version": "0.2.16"
+      "version": "0.2.27"
     },
     {
       "author": "whyrusleeping",
@@ -54,9 +54,9 @@
     },
     {
       "author": "why",
-      "hash": "QmT3rzed1ppXefourpmoZ7tyVQfsGPQZ1pHDngLmCvXxd3",
+      "hash": "QmQAgv6Gaoe2tQpcabqwKXKChp2MZ7i3UXv9DqTTaxCaTR",
       "name": "go-path",
-      "version": "1.1.16"
+      "version": "1.1.39"
     },
     {
       "author": "whyrusleeping",
