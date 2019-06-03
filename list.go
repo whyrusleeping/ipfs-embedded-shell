@@ -1,26 +1,28 @@
 package embeddedShell
 
 import (
-	core "github.com/ipfs/go-ipfs/core"
-	"github.com/ipfs/go-path"
+	"context"
+
+	"github.com/ipfs/go-ipfs/core/coreapi"
+	"github.com/ipfs/interface-go-ipfs-core/path"
 
 	// for types
 	sh "github.com/ipfs/go-ipfs-api"
 )
 
 func (s *Shell) List(ipath string) ([]*sh.LsLink, error) {
-	p, err := path.ParsePath(ipath)
+	api, err := coreapi.NewCoreAPI(s.node)
 	if err != nil {
 		return nil, err
 	}
 
-	nd, err := core.Resolve(s.ctx, s.node.Namesys, s.node.Resolver, p)
+	ls, err := api.Unixfs().Ls(context.Background(), path.New(ipath))
 	if err != nil {
 		return nil, err
 	}
 
 	var out []*sh.LsLink
-	for _, l := range nd.Links() {
+	for l := range ls {
 		out = append(out, &sh.LsLink{
 			Hash: l.Cid.String(),
 			Name: l.Name,
@@ -32,15 +34,15 @@ func (s *Shell) List(ipath string) ([]*sh.LsLink, error) {
 }
 
 func (s *Shell) ResolvePath(ipath string) (string, error) {
-	p, err := path.ParsePath(ipath)
+	api, err := coreapi.NewCoreAPI(s.node)
 	if err != nil {
 		return "", err
 	}
 
-	nd, err := core.Resolve(s.ctx, s.node.Namesys, s.node.Resolver, p)
+	rp, err := api.ResolvePath(context.Background(), path.New(ipath))
 	if err != nil {
 		return "", err
 	}
 
-	return nd.Cid().String(), nil
+	return rp.Cid().String(), nil
 }

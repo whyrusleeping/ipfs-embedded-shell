@@ -13,6 +13,7 @@ require (
 	github.com/ipfs/go-path v0.0.7
 	github.com/ipfs/go-unixfs v0.0.6
 	github.com/ipfs/interface-go-ipfs-core v0.0.8
+	github.com/pkg/errors v0.8.1
 	github.com/whyrusleeping/tar-utils v0.0.0-20180509141711-8c6c8ba81d5c
 	golang.org/x/net v0.0.0-20190603091049-60506f45cf65
 	google.golang.org/appengine v1.4.0 // indirect

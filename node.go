@@ -6,6 +6,7 @@ import (
 
 	"github.com/ipfs/go-ipfs-config"
 	"github.com/ipfs/go-ipfs/core"
+	"github.com/ipfs/go-ipfs/core/bootstrap"
 	"github.com/ipfs/go-ipfs/repo/fsrepo"
 	"golang.org/x/net/context"
 )
@@ -15,7 +16,7 @@ func NewDefaultNodeWithFSRepo(ctx context.Context, repoPath string) (*core.IpfsN
 	if err != nil {
 		return nil, fmt.Errorf("opening fsrepo failed: %s", err)
 	}
-	node, err := core.NewNode(ctx, &core.BuildCfg{
+	n, err := core.NewNode(ctx, &core.BuildCfg{
 		Online: true,
 		Repo:   r,
 	})
@@ -23,11 +24,11 @@ func NewDefaultNodeWithFSRepo(ctx context.Context, repoPath string) (*core.IpfsN
 		return nil, fmt.Errorf("ipfs NewNode() failed: %s", err)
 	}
 	// TODO: can we bootsrap localy/mdns first and fall back to default?
-	err = node.Bootstrap(core.DefaultBootstrapConfig)
+	err = n.Bootstrap(bootstrap.DefaultBootstrapConfig)
 	if err != nil {
 		return nil, fmt.Errorf("ipfs Bootstrap() failed: %s", err)
 	}
-	return node, nil
+	return n, nil
 }
 
 func NewTmpDirNode(ctx context.Context) (*core.IpfsNode, error) {

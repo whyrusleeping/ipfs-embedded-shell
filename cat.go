@@ -1,27 +1,31 @@
 package embeddedShell
 
 import (
-	"fmt"
+	"context"
+	"errors"
 	"io"
 
-	"github.com/ipfs/go-ipfs/core"
-	"github.com/ipfs/go-path"
-	unixfsio "github.com/ipfs/go-unixfs/io"
+	files "github.com/ipfs/go-ipfs-files"
+	"github.com/ipfs/go-ipfs/core/coreapi"
+	"github.com/ipfs/interface-go-ipfs-core/path"
 )
 
 // Cat resolves the ipfs path p and returns a reader for that data, if it exists and is availalbe
 func (s *Shell) Cat(p string) (io.ReadCloser, error) {
-	ipfsPath, err := path.ParsePath(p)
+	api, err := coreapi.NewCoreAPI(s.node)
 	if err != nil {
-		return nil, fmt.Errorf("cat: could not parse %q: %s", p, err)
+		return nil, err
 	}
-	nd, err := core.Resolve(s.ctx, s.node.Namesys, s.node.Resolver, ipfsPath)
+
+	f, err := api.Unixfs().Get(context.Background(), path.New(p))
 	if err != nil {
-		return nil, fmt.Errorf("cat: could not resolve %s: %s", ipfsPath, err)
+		return nil, err
 	}
-	dr, err := unixfsio.NewDagReader(s.ctx, nd, s.node.DAG)
-	if err != nil {
-		return nil, fmt.Errorf("cat: failed to construct DAG reader: %s", err)
+
+	rf := files.ToFile(f)
+	if rf == nil {
+		return nil, errors.New("cannot cat a non-file")
 	}
-	return dr, nil
+
+	return rf, nil
 }

@@ -2,9 +2,10 @@ package embeddedShell
 
 import (
 	"context"
+	"io"
+
 	files "github.com/ipfs/go-ipfs-files"
 	"github.com/ipfs/interface-go-ipfs-core/path"
-	"io"
 
 	"github.com/ipfs/go-ipfs/core/coreapi"
 	tar "github.com/whyrusleeping/tar-utils"
