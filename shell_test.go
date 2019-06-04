@@ -1,6 +1,7 @@
 package embeddedShell
 
 import (
+	"context"
 	"crypto/sha1"
 	"fmt"
 	"io"
@@ -64,5 +65,17 @@ func TestAdd(t *testing.T) {
 	}
 	if h != "QmTev1ZgJkHgFYiCX7MgELEDJuMygPNGcinqBa2RmfnGFu" {
 		t.Fatal("wrong hash from add")
+	}
+}
+
+func TestTempNode(t *testing.T) {
+	ctx := context.Background()
+
+	s, err := NewTmpDirNode(ctx)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := s.Close(); err != nil {
+		t.Fatal(err)
 	}
 }

@@ -2,16 +2,47 @@ package embeddedShell
 
 import (
 	"fmt"
-	"io/ioutil"
-
 	"github.com/ipfs/go-ipfs-config"
 	"github.com/ipfs/go-ipfs/core"
 	"github.com/ipfs/go-ipfs/core/bootstrap"
+	"github.com/ipfs/go-ipfs/plugin/loader"
 	"github.com/ipfs/go-ipfs/repo/fsrepo"
 	"golang.org/x/net/context"
+	"io/ioutil"
+	"sync"
 )
 
+var plugins sync.Once
+var pluginErr error
+
+func initPlugins() error {
+	// initializes preloaded datastore plugins
+
+	plugins.Do(func() {
+		pl, err := loader.NewPluginLoader("")
+		if err != nil {
+			pluginErr = err
+			return
+		}
+
+		if err := pl.Initialize(); err != nil {
+			pluginErr = err
+			return
+		}
+
+		if err := pl.Inject(); err != nil {
+			pluginErr = err
+			return
+		}
+	})
+	return pluginErr
+}
+
 func NewDefaultNodeWithFSRepo(ctx context.Context, repoPath string) (*core.IpfsNode, error) {
+	if err := initPlugins(); err != nil {
+		return nil, err
+	}
+
 	r, err := fsrepo.Open(repoPath)
 	if err != nil {
 		return nil, fmt.Errorf("opening fsrepo failed: %s", err)
@@ -39,6 +70,10 @@ func NewTmpDirNode(ctx context.Context) (*core.IpfsNode, error) {
 
 	cfg, err := config.Init(ioutil.Discard, 1024)
 	if err != nil {
+		return nil, err
+	}
+
+	if err := initPlugins(); err != nil {
 		return nil, err
 	}
 
